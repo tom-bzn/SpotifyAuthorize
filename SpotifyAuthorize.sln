@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAuthorize", "SpotifyAuthorize\SpotifyAuthorize.csproj", "{245F3DA2-22CB-4861-8E0B-910DCEA048EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotifyAuthorize.Tests", "SpotifyAuthorize.Tests\SpotifyAuthorize.Tests.csproj", "{4DCD86EE-26C0-4595-BFB3-0051CE85295C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{245F3DA2-22CB-4861-8E0B-910DCEA048EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245F3DA2-22CB-4861-8E0B-910DCEA048EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245F3DA2-22CB-4861-8E0B-910DCEA048EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245F3DA2-22CB-4861-8E0B-910DCEA048EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DCD86EE-26C0-4595-BFB3-0051CE85295C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DCD86EE-26C0-4595-BFB3-0051CE85295C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DCD86EE-26C0-4595-BFB3-0051CE85295C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DCD86EE-26C0-4595-BFB3-0051CE85295C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
