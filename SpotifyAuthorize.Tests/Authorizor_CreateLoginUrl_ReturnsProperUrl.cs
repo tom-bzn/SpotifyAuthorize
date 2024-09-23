@@ -1,16 +1,19 @@
 using System.Web;
+using SpotifyAuthorize.Tests.MockFactories;
 
 namespace SpotifyAuthorize.Tests;
 
 public class Authorizor_CreateLoginUrl_ReturnsProperUrl
 {
+    private readonly HttpClient _httpClientMock = HttpClientMockFactory.CreateMockWithNoConfig();
+
     [Fact]
     public void ShouldReturnProperUrlOnSimpleInput()
     {
         string clientId = "client_id";
         string clientSecret = "client_secret";
         string redirectUrl = "https://example.com";
-        Authorizor sut = new(clientId, clientSecret, redirectUrl);
+        Authorizor sut = new(_httpClientMock, clientId, clientSecret, redirectUrl);
         string[] scope = ["scope1"];
 
         string url = sut.CreateLoginUrl(scope);
@@ -24,7 +27,7 @@ public class Authorizor_CreateLoginUrl_ReturnsProperUrl
         string clientId = Guid.NewGuid().ToString();
         string clientSecret = Guid.NewGuid().ToString();
         string redirectUrl = "https://example.com?key=value&key2=value2";
-        Authorizor sut = new(clientId, clientSecret, redirectUrl);
+        Authorizor sut = new(_httpClientMock, clientId, clientSecret, redirectUrl);
         string[] scope = ["scope1", "scope2", "scope_!23"];
 
         string url = sut.CreateLoginUrl(scope);

@@ -1,4 +1,4 @@
-namespace SpotifyAuthorize;
+namespace SpotifyAuthorize.Factories;
 
 public static class HttpClientFactory
 {

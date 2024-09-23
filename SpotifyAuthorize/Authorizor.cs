@@ -1,3 +1,6 @@
+using SpotifyAuthorize.Actions;
+using SpotifyAuthorize.Models;
+
 namespace SpotifyAuthorize;
 
 /// <summary>
@@ -32,7 +35,7 @@ public class Authorizor(HttpClient client, string clientId, string clientSecret,
         return _accessTokenDetails;
     }
 
-    public async Task<AccessTokenDetails> RefreshToken()
+    public async Task<AccessTokenDetails> RefreshTokenAsync()
     {
         if (_accessTokenDetails == null)
         {

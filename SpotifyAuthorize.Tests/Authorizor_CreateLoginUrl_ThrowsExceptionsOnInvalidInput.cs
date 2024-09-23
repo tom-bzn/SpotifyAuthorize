@@ -1,18 +1,22 @@
+using SpotifyAuthorize.Tests.MockFactories;
+
 namespace SpotifyAuthorize.Tests;
 
 public class Authorizor_CreateLoginUrl_ThrowsExceptionOnInvalidInput
 {
-    private readonly Authorizor Sut = new("client_id", "client_secret", "https://example.com");
+    private readonly HttpClient _httpClientMock = HttpClientMockFactory.CreateMockWithNoConfig();
 
     [Fact]
     public void ShouldThrowArgumentExceptionOnEmptyScope()
     {
-        Assert.Throws<ArgumentException>(() => Sut.CreateLoginUrl([]));
+        Assert.Throws<ArgumentException>(() => new Authorizor(_httpClientMock, "client_id", "client_secret", "https://example.com")
+            .CreateLoginUrl([]));
     }
 
     [Fact]
     public void ShouldThrowExceptionOnInvalidRedirectUrl()
     {
-        Assert.Throws<UriFormatException>(() => new Authorizor("client_id", "client_secret", "invalid url").CreateLoginUrl(["scope1"]));
+        Assert.Throws<UriFormatException>(() => new Authorizor(_httpClientMock, "client_id", "client_secret", "invalid url")
+            .CreateLoginUrl(["scope1"]));
     }
 }

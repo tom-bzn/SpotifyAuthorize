@@ -1,4 +1,4 @@
-namespace SpotifyAuthorize;
+namespace SpotifyAuthorize.Models;
 
 /**
  * @see https://developer.spotify.com/documentation/web-api/tutorials/code-flow

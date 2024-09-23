@@ -2,8 +2,9 @@ using System.Data;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using SpotifyAuthorize.Models;
 
-namespace SpotifyAuthorize;
+namespace SpotifyAuthorize.Actions;
 
 internal class ExchangeCodeForTokenAction(string clientId, string clientSecret, string redirectUrl)
 {

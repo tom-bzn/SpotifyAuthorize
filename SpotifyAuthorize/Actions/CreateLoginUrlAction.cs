@@ -1,6 +1,6 @@
 using System.Web;
 
-namespace SpotifyAuthorize;
+namespace SpotifyAuthorize.Actions;
 
 internal class CreateLoginUrlAction
 {

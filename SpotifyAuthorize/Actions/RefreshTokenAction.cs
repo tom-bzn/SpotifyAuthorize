@@ -1,8 +1,9 @@
 using System.Data;
 using System.Net.Http.Json;
 using System.Text.Json;
+using SpotifyAuthorize.Models;
 
-namespace SpotifyAuthorize;
+namespace SpotifyAuthorize.Actions;
 
 internal class RefreshTokenAction(string clientId)
 {

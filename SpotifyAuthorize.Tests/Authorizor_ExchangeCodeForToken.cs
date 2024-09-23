@@ -2,13 +2,12 @@ using System.Net;
 using System.Net.Http.Json;
 using Moq;
 using Moq.Protected;
+using SpotifyAuthorize.Models;
 
 namespace SpotifyAuthorize.Tests;
 
 public class Authorizor_ExchangeCodeForToken
 {
-    private readonly Authorizor Sut = new("client_id", "client_secret", "https://example.com");
-
     [Fact]
     public async Task Xyz()
     {
@@ -63,7 +62,9 @@ public class Authorizor_ExchangeCodeForToken
                 ItExpr.IsAny<CancellationToken>())
             .ReturnsAsync(mockResponse);
 
-        AccessTokenDetails tokenDetails = await Sut.ExchangeCodeForTokenAsync("CODETOEXCHANGE", new HttpClient(mockHandler.Object));
+        Authorizor sut = new(new HttpClient(mockHandler.Object), "client_id", "client_secret", "https://example.com");
+
+        AccessTokenDetails tokenDetails = await sut.ExchangeCodeForTokenAsync("CODETOEXCHANGE");
 
         Assert.Equal("fake_access_token", tokenDetails.AccessToken);
     }
