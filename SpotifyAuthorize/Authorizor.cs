@@ -1,4 +1,5 @@
 using SpotifyAuthorize.Actions;
+using SpotifyAuthorize.Factories;
 using SpotifyAuthorize.Models;
 
 namespace SpotifyAuthorize;
@@ -7,13 +8,11 @@ namespace SpotifyAuthorize;
 /// Spotify Authorize facade
 /// </summary>
 /// <param name="redirectUrl">The one, user should be redirected to after successful logging to Spotify</param>
-public class Authorizor(HttpClient client, string clientId, string clientSecret, string redirectUrl)
+public class Authorizor(string clientId, string clientSecret, string redirectUrl, HttpClient? client = null)
 {
-    private readonly HttpClient _httpClient = client;
+    private readonly HttpClient _httpClient = client ?? HttpClientFactory.Create(clientId, clientSecret);
 
     private readonly string _clientId = clientId;
-
-    private readonly string _clientSecret = clientSecret;
 
     private readonly string _redirectUrl = redirectUrl;
 
@@ -31,7 +30,8 @@ public class Authorizor(HttpClient client, string clientId, string clientSecret,
 
     public async Task<AccessTokenDetails> ExchangeCodeForTokenAsync(string code)
     {
-        _accessTokenDetails = await new ExchangeCodeForTokenAction(_clientId, _clientSecret, _redirectUrl).Perform(code, _httpClient);
+        _accessTokenDetails = await new ExchangeCodeForTokenAction(_redirectUrl).Perform(code, _httpClient);
+
         return _accessTokenDetails;
     }
 
@@ -43,6 +43,7 @@ public class Authorizor(HttpClient client, string clientId, string clientSecret,
         }
 
         _accessTokenDetails = await new RefreshTokenAction(_clientId).Perform(_accessTokenDetails.RefreshToken, _httpClient);
+
         return _accessTokenDetails;
     }
 }

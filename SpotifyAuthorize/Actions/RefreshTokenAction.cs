@@ -11,7 +11,7 @@ internal class RefreshTokenAction(string clientId)
 
     public async Task<AccessTokenDetails> Perform(string refreshToken, HttpClient client)
     {
-        HttpRequestMessage request = new(HttpMethod.Post, "https://accounts.spotify.com/api/token")
+        HttpRequestMessage request = new(HttpMethod.Post, "")
         {
             Content = new FormUrlEncodedContent(PrepareContentData(refreshToken))
         };
