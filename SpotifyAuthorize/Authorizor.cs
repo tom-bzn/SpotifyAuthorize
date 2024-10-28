@@ -16,9 +16,11 @@ public class Authorizor(string clientId, string clientSecret, string redirectUrl
 
     private readonly string _redirectUrl = redirectUrl;
 
-    private AccessTokenDetails? _accessTokenDetails = null;
+    private AccessTokenDetails? _obtainedTokenDetails;
 
-    public string? AccessToken { get => _accessTokenDetails?.AccessToken; }
+    private DateTime _obtainedTokenExpiryTime;
+
+    public string AccessToken => _obtainedTokenDetails?.AccessToken ?? throw new InvalidOperationException("No token available.");
 
     /// <summary>
     /// Creates a url to which you should redirect a user to log in.
@@ -30,20 +32,27 @@ public class Authorizor(string clientId, string clientSecret, string redirectUrl
 
     public async Task<AccessTokenDetails> ExchangeCodeForTokenAsync(string code)
     {
-        _accessTokenDetails = await new ExchangeCodeForTokenAction(_redirectUrl).Perform(code, _httpClient);
+        _obtainedTokenDetails = await new ExchangeCodeForTokenAction(_redirectUrl).Perform(code, _httpClient);
+        _obtainedTokenExpiryTime = DateTime.UtcNow.AddSeconds(_obtainedTokenDetails.ExpiresIn);
 
-        return _accessTokenDetails;
+        return _obtainedTokenDetails;
     }
 
     public async Task<AccessTokenDetails> RefreshTokenAsync()
     {
-        if (_accessTokenDetails == null)
+        if (_obtainedTokenDetails == null)
         {
             throw new InvalidOperationException("There is no access token details stored, thus we don't have a refresh token.");
         }
 
-        _accessTokenDetails = await new RefreshTokenAction(_clientId).Perform(_accessTokenDetails.RefreshToken, _httpClient);
+        _obtainedTokenDetails = await new RefreshTokenAction(_clientId).Perform(_obtainedTokenDetails.RefreshToken, _httpClient);
+        _obtainedTokenExpiryTime = DateTime.UtcNow.AddSeconds(_obtainedTokenDetails.ExpiresIn);
 
-        return _accessTokenDetails;
+        return _obtainedTokenDetails;
+    }
+
+    public bool IsTokenExpired()
+    {
+        return DateTime.UtcNow >= _obtainedTokenExpiryTime;
     }
 }
