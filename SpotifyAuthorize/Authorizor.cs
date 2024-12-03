@@ -51,8 +51,18 @@ public class Authorizor(string clientId, string clientSecret, string redirectUrl
         return _obtainedTokenDetails;
     }
 
+    public bool IsAnyTokenObtained()
+    {
+        return _obtainedTokenDetails != null;
+    }
+
     public bool IsTokenExpired()
     {
+        if (!IsAnyTokenObtained())
+        {
+            throw new InvalidOperationException("No token was obtained.");
+        }
+
         return DateTime.UtcNow >= _obtainedTokenExpiryTime;
     }
 }
